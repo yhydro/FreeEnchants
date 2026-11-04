@@ -1,0 +1,6 @@
+name: FreeEnchants
+version: '1.0.0'
+main: local.freeenchants.FreeEnchants
+bootstrapper: local.freeenchants.FreeEnchantsBootstrap
+description: Hebt alle Enchantment-Konflikte auf (Infinity + Mending usw.)
+api-version: '26.2'
