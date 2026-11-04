@@ -10,21 +10,22 @@ import org.bukkit.enchantments.Enchantment;
 
 import java.util.List;
 
-/**
- * Hebt bei JEDEM Enchantment die Liste der unvertraeglichen Enchantments auf.
- * Dadurch funktionieren Infinity + Mending, Schaerfe + Bann usw. ueberall:
- * Amboss, Verzauberungstisch, Buecher und Loot.
- */
 public final class FreeEnchantsBootstrap implements PluginBootstrap {
+
+    /** Hier aendern, falls du ein anderes Maximum willst (erlaubt: 1 bis 255). */
+    private static final int MAX_LEVEL = 255;
 
     @Override
     public void bootstrap(final BootstrapContext context) {
         context.getLifecycleManager().registerEventHandler(
-            RegistryEvents.ENCHANTMENT.entryAdd().newHandler(event ->
+            RegistryEvents.ENCHANTMENT.entryAdd().newHandler(event -> {
                 event.builder().exclusiveWith(
                     RegistrySet.keySet(RegistryKey.ENCHANTMENT, List.<TypedKey<Enchantment>>of())
-                )
-            )
+                );
+                if ("minecraft".equals(event.key().key().namespace())) {
+                    event.builder().maxLevel(MAX_LEVEL);
+                }
+            })
         );
     }
 }
